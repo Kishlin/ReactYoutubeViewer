@@ -17,7 +17,13 @@ export default class App extends Component {
 	}
 
 	componentDidMount() {
-		YTSearch({key: Constants.API_KEY, term: 'surfboards'}, videos => {
+		this.videoSearch('surfboards');
+	}
+
+	videoSearch(term) {
+		const key = Constants.API_KEY;
+
+		YTSearch({ key, term }, videos => {
 			const selectedVideo = videos[0];
 			this.setState({ videos, selectedVideo });
 		});
@@ -28,7 +34,7 @@ export default class App extends Component {
 
 		return (
 			<div>
-				<SearchBar />
+				<SearchBar onTermChange={term => this.videoSearch(term)} />
 				<div className="row">
 					<VideoDetail video={this.state.selectedVideo} />
 					<VideoList 
